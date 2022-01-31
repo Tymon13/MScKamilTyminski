@@ -28,6 +28,9 @@ if __name__ == '__main__':
     matplotlib.use("TkAgg")
 
     fig = plt.figure()
+    fig.patch.set_color('#333333')
+    ax = plt.axes()
+    ax.patch.set_alpha(0.0)
     plt.ylabel('y')
     plt.xlabel('x')
 
@@ -36,10 +39,13 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.tk.call("source", "themes/Azure-ttk-theme/azure.tcl")
     root.tk.call("set_theme", "dark")
+    print(root['bg'])
     frame = ttk.Frame(root)
     frame.grid(column=0, row=0)
     label = ttk.Label(frame, text='Hello World!')
     label.grid(column=0, row=0)
+    label2 = ttk.Label(frame, text='End of frame')
+    label2.grid(column=0, row=2)
     canvas = FigureCanvasTkAgg(fig, master=frame)
     canvas.get_tk_widget().grid(column=0, row=1)
     tk.mainloop()
