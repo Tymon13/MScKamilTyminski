@@ -22,8 +22,8 @@ def build_chart(frame_number: int, *args):
 
 
 if __name__ == '__main__':
-    x = np.arange(start=0, stop=500)
-    y = np.arange(start=0, stop=500)
+    x = np.arange(start=0, stop=100)
+    y = np.arange(start=0, stop=100)
 
     matplotlib.use("TkAgg")
 
@@ -31,11 +31,15 @@ if __name__ == '__main__':
     plt.ylabel('y')
     plt.xlabel('x')
 
-    animator = ani.FuncAnimation(fig, build_chart, fargs=(x, y), interval=100)
+    animator = ani.FuncAnimation(fig, build_chart, fargs=(x, y), save_count=len(x), interval=100)
 
     root = tk.Tk()
+    root.tk.call("source", "themes/Azure-ttk-theme/azure.tcl")
+    root.tk.call("set_theme", "dark")
     frame = ttk.Frame(root)
     frame.grid(column=0, row=0)
+    label = ttk.Label(frame, text='Hello World!')
+    label.grid(column=0, row=0)
     canvas = FigureCanvasTkAgg(fig, master=frame)
-    canvas.get_tk_widget().grid(column=0, row=0)
+    canvas.get_tk_widget().grid(column=0, row=1)
     tk.mainloop()
