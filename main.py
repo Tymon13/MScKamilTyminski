@@ -79,4 +79,5 @@ if __name__ == '__main__':
     immunity_failure_entry = ttk.Entry(options_frame, textvariable=immunity_failure, width=3)
     immunity_failure_entry.grid(column=1, row=6)
 
+    root.protocol("WM_DELETE_WINDOW", lambda: root.quit())
     tk.mainloop()
