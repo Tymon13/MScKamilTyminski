@@ -5,8 +5,8 @@ from GraphAnimation import GraphAnimation
 
 if __name__ == '__main__':
     root = tk.Tk()
-    root.tk.call("source", "themes/Azure-ttk-theme/azure.tcl")
-    root.tk.call("set_theme", "dark")
+    root.tk.call('source', 'themes/Azure-ttk-theme/azure.tcl')
+    root.tk.call('set_theme', 'dark')
 
     graph_frame = ttk.Frame(root)
     graph_frame.grid(column=1, row=0)
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     immunity_failure_entry = ttk.Entry(options_frame, textvariable=immunity_failure, width=3)
     immunity_failure_entry.grid(column=1, row=6)
 
-    root.protocol("WM_DELETE_WINDOW", lambda: root.quit())
+    root.protocol('WM_DELETE_WINDOW', lambda: root.quit())
     tk.mainloop()

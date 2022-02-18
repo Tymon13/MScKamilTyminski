@@ -18,7 +18,7 @@ class GraphAnimation:
         x = np.arange(start=0, stop=100)
         y = np.arange(start=0, stop=100)
 
-        matplotlib.use("TkAgg")
+        matplotlib.use('TkAgg')
 
         fig = plt.figure()
         plt.style.use('dark_background')
