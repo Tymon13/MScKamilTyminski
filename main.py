@@ -8,17 +8,23 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import numpy as np
 
+sus = np.zeros(0)
+inf = np.zeros(0)
+rec = np.zeros(0)
 
 def build_chart(frame_number: int, *args):
-    x_, y_ = args
-    p = plt.plot(x_[:frame_number], y_[:frame_number])
-    p[0].set_color('white')
-    if frame_number == 50:
-        animator.pause()
-        import time
-        time.sleep(2)
-        animator.resume()
-    return p
+    # x_, y_ = args
+    global sus
+    global inf
+    global rec
+    sus = np.append(sus, [100 - frame_number * 2])
+    inf = np.append(inf, [min(10, frame_number * 2)])
+    rec = np.append(rec, [max((frame_number - 5) * 2, 0)])
+    p_rec = plt.fill_between(np.arange(0, frame_number + 1), np.zeros(frame_number + 1), rec, color='gray')
+    p_inf = plt.fill_between(np.arange(0, frame_number + 1), rec, rec + inf, color='red')
+    p_sus = plt.fill_between(np.arange(0, frame_number + 1), rec + inf, rec + inf + sus, color='blue')
+    # p[0].set_color('white')
+    #return p
 
 
 if __name__ == '__main__':
@@ -28,13 +34,14 @@ if __name__ == '__main__':
     matplotlib.use("TkAgg")
 
     fig = plt.figure()
+    plt.style.use('dark_background')
     fig.patch.set_color('#333333')
     ax = plt.axes()
     ax.patch.set_alpha(0.0)
     plt.ylabel('y')
     plt.xlabel('x')
 
-    animator = ani.FuncAnimation(fig, build_chart, fargs=(x, y), save_count=len(x), interval=100)
+    animator = ani.FuncAnimation(fig, build_chart, frames=50, init_func=lambda: None, fargs=(x, y), interval=100, repeat=False)
 
     root = tk.Tk()
     root.tk.call("source", "themes/Azure-ttk-theme/azure.tcl")
