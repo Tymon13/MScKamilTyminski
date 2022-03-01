@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from ModelCalculator import ModelCalculator
+
 
 def _make_vaccination_options_frame(root: ttk.Frame):
     vac_options = ttk.Frame(root)
@@ -46,8 +48,10 @@ def _make_immunity_failure_options(root: ttk.Frame):
 
 
 class OptionsFrame:
-    def __init__(self, root: ttk.Frame):
+    def __init__(self, root: ttk.Frame, model: ModelCalculator):
         self.root = root
+        self.model = model
+
         vac_options_frame = _make_vaccination_options_frame(self.root)
         vac_options_frame.grid(column=0, row=0)
 
