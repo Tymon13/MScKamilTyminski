@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+from BaseOptions import BaseOptions
 from ModelCalculator import ModelCalculator
 
 
@@ -52,11 +53,13 @@ class OptionsFrame:
         self.root = root
         self.model = model
 
-        vac_options_frame = _make_vaccination_options_frame(self.root)
-        vac_options_frame.grid(column=0, row=0)
+        self.base_options = BaseOptions(self.root, self.model)
+        self.base_options.grid(column=10, row=10, sticky=tk.EW)
+        ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=20, sticky=tk.EW)
 
-        separator = ttk.Separator(root, orient=tk.HORIZONTAL)
-        separator.grid(column=0, row=3, columnspan=2, sticky=tk.EW)
+        vac_options_frame = _make_vaccination_options_frame(self.root)
+        vac_options_frame.grid(column=10, row=30)
+        ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
 
         immunity_failure_frame = _make_immunity_failure_options(self.root)
-        immunity_failure_frame.grid(column=0, row=20)
+        immunity_failure_frame.grid(column=10, row=50)
