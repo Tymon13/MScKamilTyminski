@@ -38,7 +38,7 @@ class BaseOptions(ttk.Frame):
         self.recovery_entry.grid(column=20, row=40, sticky=tk.E)
 
     def _setup_entry_callbacks(self):
-        self.days.trace_add("write", lambda: setattr(self.model, "frames", self.days.get()))
-        self.population.trace_add("write", lambda: setattr(self.model, "population", self.population.get()))
-        self.R0.trace_add("write", lambda: setattr(self.model, "R0", self.R0.get()))
-        self.recovery_time.trace_add("write", lambda: setattr(self.model, "recovery_time", self.recovery_time.get()))
+        self.days.trace_add("write", lambda *_: setattr(self.model, "frames", self.days.get()))
+        self.population.trace_add("write", lambda *_: setattr(self.model, "population", self.population.get()))
+        self.R0.trace_add("write", lambda *_: setattr(self.model, "R0", self.R0.get()))
+        self.recovery_time.trace_add("write", lambda *_: setattr(self.model, "recovery_time", self.recovery_time.get()))
