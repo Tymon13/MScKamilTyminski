@@ -9,10 +9,10 @@ class BaseOptions(ttk.Frame):
         super().__init__(tk_root)
         self.model = model
 
-        self.days = tk.IntVar(value=100)
-        self.population = tk.IntVar(value=1000)
-        self.R0 = tk.DoubleVar(value=1.5)
-        self.recovery_time = tk.IntVar(value=5)
+        self.days = tk.IntVar(value=self.model.frames)
+        self.population = tk.IntVar(value=self.model.population)
+        self.R0 = tk.DoubleVar(value=self.model.R0)
+        self.recovery_time = tk.IntVar(value=self.model.recovery_time)
 
         self._setup_entry_callbacks()
         self._make_grid()
