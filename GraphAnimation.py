@@ -93,7 +93,7 @@ class GraphAnimation:
 
     def _build_chart(self, frame_data):
         self.ax.stackplot(frame_data[0], frame_data[1], frame_data[2], frame_data[3],
-                          labels=('Susceptible', 'Infected', 'Recovered'), colors=('gray', 'red', 'blue'))
+                          labels=('Recovered', 'Infected', 'Susceptible'), colors=('blue', 'red', 'gray'))
 
     def stop(self):
         self.pause()

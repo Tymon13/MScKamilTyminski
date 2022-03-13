@@ -39,7 +39,7 @@ class ModelCalculator:
             # recovered = self.inf[i - self.recovery_time]
             # self.inf[i] = self.inf[i-1] * self.R0 - recovered
             # self.rec[i] = self.rec[i-1] + recovered
-            yield self.x[:i+1], self.sus[:i+1], self.inf[:i+1], self.rec[:i+1]
+            yield self.x[:i+1], self.rec[:i+1], self.inf[:i+1], self.sus[:i+1]
 
     # def build_chart(self, frame_number: int, *args):
     #     self.sus = np.append(self.sus, [100 - frame_number * 2])
