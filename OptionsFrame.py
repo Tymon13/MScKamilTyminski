@@ -57,9 +57,9 @@ class OptionsFrame:
         self.base_options.grid(column=10, row=10, sticky=tk.EW)
         ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=20, sticky=tk.EW)
 
-        vac_options_frame = _make_vaccination_options_frame(self.root)
-        vac_options_frame.grid(column=10, row=30)
-        ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
-
-        immunity_failure_frame = _make_immunity_failure_options(self.root)
-        immunity_failure_frame.grid(column=10, row=50)
+        # vac_options_frame = _make_vaccination_options_frame(self.root)
+        # vac_options_frame.grid(column=10, row=30)
+        # ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
+        #
+        # immunity_failure_frame = _make_immunity_failure_options(self.root)
+        # immunity_failure_frame.grid(column=10, row=50)
