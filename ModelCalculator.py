@@ -6,7 +6,7 @@ class ModelCalculator:
         self.frames = 500
         self.population = 1000
         self.R0 = 2
-        self.recovery_time = 5
+        self.recovery = 0.7
 
         self.x = None
         self.sus = None
@@ -28,7 +28,7 @@ class ModelCalculator:
             # TODO: this assumes that (frames > recovery_time) and that all arrays are zeroes at the beginning
             new_infected = self.R0 * self.inf[i - 1] * self.sus[i - 1] / self.population
             new_infected = min(new_infected, self.sus[i - 1])
-            new_recovered = self.inf[i - self.recovery_time] - self.inf[i - self.recovery_time - 1]
+            new_recovered = self.inf[i - 1] * self.recovery
             new_recovered = max(new_recovered, 0)
 
             self.sus[i] = self.sus[i - 1] - new_infected

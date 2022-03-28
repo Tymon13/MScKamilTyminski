@@ -12,7 +12,7 @@ class BaseOptions(ttk.Frame):
         self.days = tk.IntVar(value=self.model.frames)
         self.population = tk.IntVar(value=self.model.population)
         self.R0 = tk.DoubleVar(value=self.model.R0)
-        self.recovery_time = tk.IntVar(value=self.model.recovery_time)
+        self.recovery = tk.IntVar(value=self.model.recovery)
 
         self._setup_entry_callbacks()
         self._make_grid()
@@ -33,12 +33,12 @@ class BaseOptions(ttk.Frame):
         self.R0_entry = ttk.Entry(master=self, textvariable=self.R0, justify='right', width=3)
         self.R0_entry.grid(column=20, row=30, sticky=tk.E)
 
-        ttk.Label(master=self, text="Recovery time (days)").grid(column=10, row=40, sticky=tk.W)
-        self.recovery_entry = ttk.Entry(master=self, textvariable=self.recovery_time, justify='right', width=3)
+        ttk.Label(master=self, text="Recovery ratio").grid(column=10, row=40, sticky=tk.W)
+        self.recovery_entry = ttk.Entry(master=self, textvariable=self.recovery, justify='right', width=3)
         self.recovery_entry.grid(column=20, row=40, sticky=tk.E)
 
     def _setup_entry_callbacks(self):
         self.days.trace_add("write", lambda *_: setattr(self.model, "frames", self.days.get()))
         self.population.trace_add("write", lambda *_: setattr(self.model, "population", self.population.get()))
         self.R0.trace_add("write", lambda *_: setattr(self.model, "R0", self.R0.get()))
-        self.recovery_time.trace_add("write", lambda *_: setattr(self.model, "recovery_time", self.recovery_time.get()))
+        self.recovery.trace_add("write", lambda *_: setattr(self.model, "recovery", self.recovery.get()))
