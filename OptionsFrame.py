@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from BaseOptions import BaseOptions
+from ImmunityFailureOptions import ImmunityFailureOptions
 from ModelCalculator import ModelCalculator
 
 
@@ -26,28 +27,6 @@ def _make_vaccination_options_frame(root: ttk.Frame):
     return vac_options
 
 
-def _make_immunity_failure_options(root: ttk.Frame):
-    imm_fail_frame = ttk.Frame(root)
-    immunity_failure_switch = ttk.Checkbutton(imm_fail_frame, text='Immunity failure', style='Switch.TCheckbutton',
-                                              state='on')
-    immunity_failure_switch.grid(column=0, row=4, columnspan=2)
-
-    immunity_failure_delay_label = ttk.Label(imm_fail_frame,
-                                             text='Min days of immunity (until immunity can be lost)')
-    immunity_failure_delay_label.grid(column=0, row=5)
-    immunity_failure_delay = tk.IntVar(value=5)
-    immunity_failure_delay_entry = ttk.Entry(imm_fail_frame, textvariable=immunity_failure_delay, width=3)
-    immunity_failure_delay_entry.grid(column=1, row=5)
-
-    immunity_failure_label = ttk.Label(imm_fail_frame, text='Chance of losing immunity (%)')
-    immunity_failure_label.grid(column=0, row=6)
-    immunity_failure = tk.IntVar(value=80)
-    immunity_failure_entry = ttk.Entry(imm_fail_frame, textvariable=immunity_failure, width=3)
-    immunity_failure_entry.grid(column=1, row=6)
-
-    return imm_fail_frame
-
-
 class OptionsFrame:
     def __init__(self, root: ttk.Frame, model: ModelCalculator):
         self.root = root
@@ -57,9 +36,10 @@ class OptionsFrame:
         self.base_options.grid(column=10, row=10, sticky=tk.EW)
         ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=20, sticky=tk.EW)
 
+        self.imm_failure_options = ImmunityFailureOptions(self.root, self.model)
+        self.imm_failure_options.grid(column=10, row=30, sticky=tk.EW)
+        ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
+
         # vac_options_frame = _make_vaccination_options_frame(self.root)
         # vac_options_frame.grid(column=10, row=30)
         # ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
-        #
-        # immunity_failure_frame = _make_immunity_failure_options(self.root)
-        # immunity_failure_frame.grid(column=10, row=50)

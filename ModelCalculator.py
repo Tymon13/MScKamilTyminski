@@ -3,10 +3,12 @@ import numpy as np
 
 class ModelCalculator:
     def __init__(self):
-        self.frames = 500
+        self.frames = 30
         self.population = 1000
         self.R0 = 2
         self.recovery = 0.7
+
+        self.immunity_failure = 0.0
 
         self.x = None
         self.sus = None
