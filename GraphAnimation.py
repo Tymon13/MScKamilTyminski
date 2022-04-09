@@ -25,7 +25,6 @@ class GraphAnimation:
 
         self.animator = None
         self.is_playing = False
-        # self.start()  # TODO: to be removed when start/stop buttons will be there
 
     def _setup_plot(self):
         matplotlib.use('TkAgg')
