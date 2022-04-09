@@ -3,12 +3,12 @@ import numpy as np
 
 class ModelCalculator:
     def __init__(self):
-        self.frames = 30
+        self.frames = 100
         self.population = 1000
         self.R0 = 2
         self.recovery = 0.7
 
-        self.immunity_failure = 0.0
+        self.immunity_failure = 0.15
 
         self.x = None
         self.sus = None
@@ -32,9 +32,10 @@ class ModelCalculator:
             new_infected = min(new_infected, self.sus[i - 1])
             new_recovered = self.inf[i - 1] * self.recovery
             new_recovered = max(new_recovered, 0)
+            lost_immunity = self.rec[i - 1] * self.immunity_failure
 
-            self.sus[i] = self.sus[i - 1] - new_infected
+            self.sus[i] = self.sus[i - 1] - new_infected + lost_immunity
             self.inf[i] = self.inf[i - 1] + new_infected - new_recovered
-            self.rec[i] = self.rec[i - 1] + new_recovered
+            self.rec[i] = self.rec[i - 1] + new_recovered - lost_immunity
 
             yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1]

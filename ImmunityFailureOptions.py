@@ -29,8 +29,9 @@ class ImmunityFailureOptions(ttk.Frame):
 
     def _show_options(self):
         self.sub_options = ttk.Frame(self)
-        ttk.Label(self.sub_options, text='Chance of losing immunity (%)').grid(column=1, row=1)
-        immunity_failure_entry = ttk.Entry(self.sub_options, textvariable=self.immunity_failure_chance, width=3)
+        ttk.Label(self.sub_options, text='Chance of losing immunity').grid(column=1, row=1)
+        immunity_failure_entry = ttk.Entry(self.sub_options, textvariable=self.immunity_failure_chance, width=4,
+                                           justify='right')
         immunity_failure_entry.grid(column=2, row=1)
         self.sub_options.grid(column=1, row=2, columnspan=2)
 
