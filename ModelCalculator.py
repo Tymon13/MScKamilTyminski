@@ -1,3 +1,5 @@
+from typing import Callable
+
 import numpy as np
 
 
@@ -23,7 +25,7 @@ class ModelCalculator:
         self.inf = np.zeros(self.frames)
         self.rec = np.zeros(self.frames)
 
-    def generate(self):
+    def generate(self, end_callback: Callable[[None], None]):
         self.inf[0] = 1  # start the infection
         self.sus[0] = self.population - self.inf[0]
         for i in range(1, self.frames):
@@ -39,3 +41,5 @@ class ModelCalculator:
             self.rec[i] = self.rec[i - 1] + new_recovered - lost_immunity
 
             yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1]
+
+        end_callback()

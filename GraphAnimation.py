@@ -88,7 +88,8 @@ class GraphAnimation:
         self.plot_widget.get_tk_widget().destroy()
         self.plot_widget = self._setup_plot()
 
-        self.animator = ani.FuncAnimation(self.fig, self._build_chart, frames=self.current_model.generate(),
+        self.animator = ani.FuncAnimation(self.fig, self._build_chart,
+                                          frames=self.current_model.generate(self._stop_button_callback),
                                           init_func=lambda: None, interval=100, repeat=False)
 
     def _build_chart(self, frame_data):
