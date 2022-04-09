@@ -25,7 +25,7 @@ class ModelCalculator:
         self.inf = np.zeros(self.frames)
         self.rec = np.zeros(self.frames)
 
-    def generate(self, end_callback: Callable[[None], None]):
+    def generate(self, end_callback: Callable[[], None]):
         self.inf[0] = 1  # start the infection
         self.sus[0] = self.population - self.inf[0]
         for i in range(1, self.frames):
