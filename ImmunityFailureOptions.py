@@ -34,10 +34,12 @@ class ImmunityFailureOptions(ttk.Frame):
                                            justify='right')
         immunity_failure_entry.grid(column=2, row=1)
         self.sub_options.grid(column=1, row=2, columnspan=2)
+        self.model.immunity_failure = self.immunity_failure_chance.get()
 
     def _hide_options(self):
         if self.sub_options:
             self.sub_options.destroy()
+        self.model.immunity_failure = 0
 
     def _setup_entry_callbacks(self):
         self.immunity_failure_on.trace_add("write", self._switch_sub_options)
