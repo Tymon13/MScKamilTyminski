@@ -29,19 +29,22 @@ class VaccinationOptions(ttk.Frame):
 
     def _show_options(self):
         self.sub_options = ttk.Frame(self)
-        ttk.Label(self.sub_options, text='Days before vaccine is developed').grid(column=1, row=1)
+        self.sub_options.columnconfigure(1, weight=1)
+        self.sub_options.columnconfigure(2, weight=1)
+
+        ttk.Label(self.sub_options, text='Days before vaccine is developed').grid(column=1, row=1, sticky=tk.W)
         vaccination_delay_entry = ttk.Entry(self.sub_options, textvariable=self.vaccination_delay, width=3,
                                             justify='right')
-        vaccination_delay_entry.grid(column=2, row=1)
+        vaccination_delay_entry.grid(column=2, row=1, sticky=tk.E)
 
-        ttk.Label(self.sub_options, text='Daily vaccinations').grid(column=1, row=2)
+        ttk.Label(self.sub_options, text='Daily vaccinations').grid(column=1, row=2, sticky=tk.W)
         vaccination_daily_entry = ttk.Entry(self.sub_options, textvariable=self.vaccination_daily, width=4,
                                             justify='right')
-        vaccination_daily_entry.grid(column=2, row=2)
+        vaccination_daily_entry.grid(column=2, row=2, sticky=tk.E)
 
         self.model.vaccination_delay = self.vaccination_delay.get()
         self.model.vaccination_daily_percentage = self.vaccination_daily.get()
-        self.sub_options.grid(column=1, row=2, columnspan=2)
+        self.sub_options.grid(column=1, row=2, columnspan=2, sticky=tk.EW)
 
     def _hide_options(self):
         if self.sub_options:
