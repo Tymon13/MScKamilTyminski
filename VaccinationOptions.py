@@ -40,13 +40,14 @@ class VaccinationOptions(ttk.Frame):
         vaccination_daily_entry.grid(column=2, row=2)
 
         self.model.vaccination_delay = self.vaccination_delay.get()
-        self.model.vaccination_delay = self.vaccination_delay.get()
+        self.model.vaccination_daily_percentage = self.vaccination_daily.get()
         self.sub_options.grid(column=1, row=2, columnspan=2)
 
     def _hide_options(self):
         if self.sub_options:
             self.sub_options.destroy()
-        self.model.immunity_failure = 0
+        self.model.vaccination_delay = 0
+        self.model.vaccination_daily_percentage = 0.0
 
     def _setup_entry_callbacks(self):
         self.vaccination_on.trace_add("write", self._switch_sub_options)

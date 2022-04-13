@@ -19,6 +19,7 @@ class ModelCalculator:
         self.sus = None
         self.inf = None
         self.rec = None
+        self.vac = None
 
         self.reset()
 
@@ -27,6 +28,7 @@ class ModelCalculator:
         self.sus = np.zeros(self.frames)
         self.inf = np.zeros(self.frames)
         self.rec = np.zeros(self.frames)
+        self.vac = np.zeros(self.frames)
 
     def generate(self, end_callback: Callable[[], None]):
         self.inf[0] = 1  # start the infection
@@ -37,12 +39,15 @@ class ModelCalculator:
             new_infected = min(new_infected, self.sus[i - 1])
             new_recovered = self.inf[i - 1] * self.recovery
             new_recovered = max(new_recovered, 0)
+            new_vaccinated = self.sus[i - 1] * self.vaccination_daily_percentage
+            new_vaccinated = max(new_vaccinated, 0) if i > self.vaccination_delay else 0
             lost_immunity = self.rec[i - 1] * self.immunity_failure
 
-            self.sus[i] = self.sus[i - 1] - new_infected + lost_immunity
+            self.sus[i] = self.sus[i - 1] - new_infected - new_vaccinated + lost_immunity
             self.inf[i] = self.inf[i - 1] + new_infected - new_recovered
             self.rec[i] = self.rec[i - 1] + new_recovered - lost_immunity
+            self.vac[i] = self.vac[i - 1] + new_vaccinated
 
-            yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1]
+            yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1], self.vac[:i + 1]
 
         end_callback()
