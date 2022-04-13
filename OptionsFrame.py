@@ -4,6 +4,7 @@ from tkinter import ttk
 from BaseOptions import BaseOptions
 from ImmunityFailureOptions import ImmunityFailureOptions
 from ModelCalculator import ModelCalculator
+from VaccinationOptions import VaccinationOptions
 
 
 def _make_vaccination_options_frame(root: ttk.Frame):
@@ -36,10 +37,9 @@ class OptionsFrame:
         self.base_options.grid(column=10, row=10, sticky=tk.EW)
         ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=20, sticky=tk.EW)
 
-        self.imm_failure_options = ImmunityFailureOptions(self.root, self.model)
-        self.imm_failure_options.grid(column=10, row=30, sticky=tk.EW)
+        self.vac_options = VaccinationOptions(self.root, self.model)
+        self.vac_options.grid(column=10, row=30, sticky=tk.EW)
         ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
 
-        # vac_options_frame = _make_vaccination_options_frame(self.root)
-        # vac_options_frame.grid(column=10, row=30)
-        # ttk.Separator(root, orient=tk.HORIZONTAL).grid(column=10, row=40, sticky=tk.EW)
+        self.imm_failure_options = ImmunityFailureOptions(self.root, self.model)
+        self.imm_failure_options.grid(column=10, row=50, sticky=tk.EW)

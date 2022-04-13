@@ -10,6 +10,9 @@ class ModelCalculator:
         self.R0 = 2
         self.recovery = 0.7
 
+        self.vaccination_delay = 5
+        self.vaccination_daily_percentage = 0.05
+
         self.immunity_failure = 0.15
 
         self.x = None
