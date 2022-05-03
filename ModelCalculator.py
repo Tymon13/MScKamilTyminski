@@ -12,6 +12,7 @@ class ModelCalculator:
 
         self.vaccination_delay = 5
         self.vaccination_daily_percentage = 0.05
+        self.vaccination_loss_delay = 10
 
         self.immunity_failure = 0.15
 
@@ -42,11 +43,13 @@ class ModelCalculator:
             new_vaccinated = self.sus[i - 1] * self.vaccination_daily_percentage
             new_vaccinated = max(new_vaccinated, 0) if i > self.vaccination_delay else 0
             lost_immunity = self.rec[i - 1] * self.immunity_failure
+            lost_vaccine = self.vac[i - self.vaccination_loss_delay] - self.vac[i - self.vaccination_loss_delay - 1]
+            lost_vaccine = max(lost_vaccine, 0) if self.vaccination_loss_delay > 0 else 0
 
-            self.sus[i] = self.sus[i - 1] - new_infected - new_vaccinated + lost_immunity
+            self.sus[i] = self.sus[i - 1] - new_infected - new_vaccinated + lost_immunity + lost_vaccine
             self.inf[i] = self.inf[i - 1] + new_infected - new_recovered
             self.rec[i] = self.rec[i - 1] + new_recovered - lost_immunity
-            self.vac[i] = self.vac[i - 1] + new_vaccinated
+            self.vac[i] = self.vac[i - 1] + new_vaccinated - lost_vaccine
 
             yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1], self.vac[:i + 1]
 
