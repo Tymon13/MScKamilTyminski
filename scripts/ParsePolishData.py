@@ -29,6 +29,12 @@ def get_cases_data(data_file, result):
                             result[date]['new_cases'] = int(line['liczba_wszystkich_zakazen'])
                         else:
                             result[date]['new_cases'] = int(line['liczba_przypadkow'])
+
+                        if 'liczba_ozdrowiencow' in line:
+                            result[date]['new_recovered'] = int(line['liczba_ozdrowiencow'])
+                        else:
+                            result[date]['new_recovered'] = 0
+
                         break
     return result
 
@@ -43,6 +49,7 @@ def get_cases_from_archival_data(data_file, result):
             if date not in result:
                 result[date] = {}
             result[date]['new_cases'] = int(line['Nowe przypadki'].replace(' ', ''))
+            result[date]['new_recovered'] = int(line['Ozdrowieńcy (dzienna)'])
     return result
 
 
@@ -70,7 +77,7 @@ def save_data(filename, data):
         for date, content in data.items():
             new_data.append({'date': date, **content})
         new_data = sorted(new_data, key=lambda d: d['date'])
-        writer = csv.DictWriter(csvfile, ['date', 'new_cases', 'new_vaccines'])
+        writer = csv.DictWriter(csvfile, ['date', 'new_cases', 'new_recovered', 'new_vaccines'])
         writer.writeheader()
         writer.writerows(new_data)
 
