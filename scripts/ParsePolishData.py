@@ -67,7 +67,7 @@ def get_vaccines_data(data_file, result):
                 date = datetime.datetime.strptime(filename[:8], '%Y%m%d').date()
                 if date not in result:
                     result[date] = {}
-                result[date]['new_vaccines'] = int(line['liczba_szczepien_dziennie'])
+                result[date]['new_vaccines'] = int(line['dawka_2_dziennie'])
     return result
 
 
