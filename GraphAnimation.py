@@ -7,16 +7,18 @@ import matplotlib.pyplot as plt
 from PIL import ImageTk, Image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+from HistoricDataSupplier import HistoricDataSupplier
 from ModelCalculator import ModelCalculator
 
 
 class GraphAnimation:
     BUTTON_SIZE_PX = 25
 
-    def __init__(self, tk_root: ttk.Frame, next_model: ModelCalculator):
+    def __init__(self, tk_root: ttk.Frame, next_model: ModelCalculator, historic_data_supplier: HistoricDataSupplier):
         self.root = tk_root
         self.future_model = next_model
         self.current_model = copy.deepcopy(next_model)
+        self.historic_data_supplier = historic_data_supplier
 
         self.playback_buttons = self._make_playback_buttons()
         self.playback_buttons.grid(column=10, row=10)
@@ -88,13 +90,24 @@ class GraphAnimation:
         self.plot_widget = self._setup_plot()
 
         self.animator = ani.FuncAnimation(self.fig, self._build_chart,
-                                          frames=self.current_model.generate(self._stop_button_callback),
+                                          frames=self._get_frames(),
                                           init_func=lambda: None, interval=100, repeat=False)
 
     def _build_chart(self, frame_data):
-        self.ax.stackplot(frame_data[0], frame_data[4], frame_data[1], frame_data[2], frame_data[3],
+        sim_data = frame_data[0]
+        hist_data = frame_data[1]
+        x = sim_data[0]
+        self.ax.stackplot(x, sim_data[4], sim_data[1], sim_data[2], sim_data[3],
                           labels=('Vaccinated', 'Recovered', 'Infected', 'Susceptible'),
                           colors=('seagreen', 'steelblue', 'indianred', 'gray'))
+        hist_cases_on_stackplot = hist_data[0] + sim_data[4] + sim_data[1]
+        self.ax.plot(x, hist_cases_on_stackplot, color='red')
+        self.ax.plot(x, hist_data[1], color='green')
+
+    def _get_frames(self):
+        for frame in zip(self.current_model.generate(self._stop_button_callback),
+                         self.historic_data_supplier.generate()):
+            yield frame
 
     def stop(self):
         self.pause()

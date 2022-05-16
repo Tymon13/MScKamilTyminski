@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from GraphAnimation import GraphAnimation
+from HistoricDataSupplier import HistoricDataSupplier
 from ModelCalculator import ModelCalculator
 from OptionsFrame import OptionsFrame
 
@@ -12,10 +13,11 @@ class App:
         self.set_dark_theme()
         self.set_graceful_exit_on_window_close()
         self.model = ModelCalculator()
+        self.historical_data = HistoricDataSupplier('data/Polish_parsed.csv')
 
         graph_frame = ttk.Frame(tk_root)
         graph_frame.grid(column=1, row=0)
-        self.graph = GraphAnimation(graph_frame, self.model)
+        self.graph = GraphAnimation(graph_frame, self.model, self.historical_data)
 
         options_frame = ttk.Frame(tk_root)
         options_frame.grid(column=0, row=0)

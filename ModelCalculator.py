@@ -25,11 +25,11 @@ class ModelCalculator:
         self.reset()
 
     def reset(self):
-        self.x = np.arange(0, self.frames)
-        self.sus = np.zeros(self.frames)
-        self.inf = np.zeros(self.frames)
-        self.rec = np.zeros(self.frames)
-        self.vac = np.zeros(self.frames)
+        self.x = np.arange(0, self.frames + 1)
+        self.sus = np.zeros(self.frames + 1)
+        self.inf = np.zeros(self.frames + 1)
+        self.rec = np.zeros(self.frames + 1)
+        self.vac = np.zeros(self.frames + 1)
 
     def generate(self, end_callback: Callable[[], None]):
         self.inf[0] = 1  # start the infection
@@ -51,6 +51,6 @@ class ModelCalculator:
             self.rec[i] = self.rec[i - 1] + new_recovered - lost_immunity
             self.vac[i] = self.vac[i - 1] + new_vaccinated - lost_vaccine
 
-            yield self.x[:i + 1], self.rec[:i + 1], self.inf[:i + 1], self.sus[:i + 1], self.vac[:i + 1]
+            yield self.x[:i], self.rec[:i], self.inf[:i], self.sus[:i], self.vac[:i]
 
         end_callback()
