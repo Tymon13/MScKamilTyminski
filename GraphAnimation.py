@@ -38,6 +38,7 @@ class GraphAnimation:
         self.ax = self.fig.add_subplot(111)
         self.ax.patch.set_alpha(0.0)
         self.ax.set(xlabel='x', ylabel='y')
+        self.ax.grid(visible=True, alpha=0.2)
 
         plot_widget = FigureCanvasTkAgg(self.fig, master=self.root)
         plot_widget.get_tk_widget().grid(column=10, row=20)
@@ -91,7 +92,7 @@ class GraphAnimation:
 
         self.animator = ani.FuncAnimation(self.fig, self._build_chart,
                                           frames=self._get_frames(),
-                                          init_func=lambda: None, interval=100, repeat=False)
+                                          init_func=lambda: None, interval=10, repeat=False)
 
     def _build_chart(self, frame_data):
         sim_data = frame_data[0]
