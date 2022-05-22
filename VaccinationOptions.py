@@ -37,7 +37,7 @@ class VaccinationOptions(ttk.Frame):
         self.sub_options.columnconfigure(2, weight=1)
 
         ttk.Label(self.sub_options, text='Days before vaccine is developed').grid(column=1, row=1, sticky=tk.W)
-        vaccination_delay_entry = ttk.Entry(self.sub_options, textvariable=self.vaccination_delay, width=3,
+        vaccination_delay_entry = ttk.Entry(self.sub_options, textvariable=self.vaccination_delay, width=4,
                                             justify='right')
         vaccination_delay_entry.grid(column=2, row=1, sticky=tk.E)
 

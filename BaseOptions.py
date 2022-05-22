@@ -22,19 +22,19 @@ class BaseOptions(ttk.Frame):
         self.columnconfigure(20, weight=1)
 
         ttk.Label(master=self, text="Days of simulation").grid(column=10, row=10, sticky=tk.W)
-        self.days_entry = ttk.Entry(master=self, textvariable=self.days, justify='right', width=3)
+        self.days_entry = ttk.Entry(master=self, textvariable=self.days, justify='right', width=4)
         self.days_entry.grid(column=20, row=10, sticky=tk.E)
 
         ttk.Label(master=self, text="Population").grid(column=10, row=20, sticky=tk.W)
-        self.population_entry = ttk.Entry(master=self, textvariable=self.population, justify='right', width=6)
+        self.population_entry = ttk.Entry(master=self, textvariable=self.population, justify='right', width=9)
         self.population_entry.grid(column=20, row=20, sticky=tk.E)
 
         ttk.Label(master=self, text="R0").grid(column=10, row=30, sticky=tk.W)
-        self.R0_entry = ttk.Entry(master=self, textvariable=self.R0, justify='right', width=3)
+        self.R0_entry = ttk.Entry(master=self, textvariable=self.R0, justify='right', width=4)
         self.R0_entry.grid(column=20, row=30, sticky=tk.E)
 
         ttk.Label(master=self, text="Recovery ratio").grid(column=10, row=40, sticky=tk.W)
-        self.recovery_entry = ttk.Entry(master=self, textvariable=self.recovery, justify='right', width=3)
+        self.recovery_entry = ttk.Entry(master=self, textvariable=self.recovery, justify='right', width=4)
         self.recovery_entry.grid(column=20, row=40, sticky=tk.E)
 
     def _setup_entry_callbacks(self):
