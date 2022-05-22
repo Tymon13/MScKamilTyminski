@@ -5,14 +5,14 @@ import numpy as np
 
 class ModelCalculator:
     def __init__(self):
-        self.frames = 100
-        self.population = 1000
-        self.R0 = 2
+        self.frames = 1000
+        self.population = 38_000_000
+        self.R0 = 1.1
         self.recovery = 0.7
 
-        self.vaccination_delay = 5
+        self.vaccination_delay = 300
         self.vaccination_daily_percentage = 0.05
-        self.vaccination_loss_delay = 10
+        self.vaccination_loss_delay = 180
 
         self.immunity_failure = 0.15
 
