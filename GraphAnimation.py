@@ -103,8 +103,8 @@ class GraphAnimation:
         hist_data = frame_data[1]
         x = sim_data[0]
         stackplot = self.ax.stackplot(x, sim_data[4], sim_data[1], sim_data[2], sim_data[3],
-                          labels=('Vaccinated', 'Recovered', 'Infected', 'Susceptible'),
-                          colors=('seagreen', 'steelblue', 'indianred', 'gray'))
+                                      labels=('Vaccinated', 'Recovered', 'Infected', 'Susceptible'),
+                                      colors=('seagreen', 'steelblue', 'indianred', 'gray'))
         hist_cases_on_stackplot = hist_data[0] + sim_data[4] + sim_data[1]
         hist_cases_plot, = self.ax.plot(x, hist_cases_on_stackplot, color='red', label='Infected')
         hist_vaccines_plot, = self.ax.plot(x, hist_data[1], color='green', label='Vaccinated')
@@ -114,9 +114,10 @@ class GraphAnimation:
         self.ax.legend(handles=[hist_cases_plot, hist_vaccines_plot], loc='upper right', title='Historical data')
 
     def _get_frames(self):
-        for frame in zip(self.current_model.generate(self._stop_button_callback),
+        for frame in zip(self.current_model.generate(),
                          self.historic_data_supplier.generate()):
             yield frame
+        self._stop_button_callback()
 
     def stop(self):
         self.pause()

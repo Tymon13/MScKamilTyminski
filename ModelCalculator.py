@@ -31,7 +31,7 @@ class ModelCalculator:
         self.rec = np.zeros(self.frames + 1)
         self.vac = np.zeros(self.frames + 1)
 
-    def generate(self, end_callback: Callable[[], None]):
+    def generate(self):
         self.inf[0] = 1  # start the infection
         self.sus[0] = self.population - self.inf[0]
         for i in range(1, self.frames):
@@ -52,5 +52,3 @@ class ModelCalculator:
             self.vac[i] = self.vac[i - 1] + new_vaccinated - lost_vaccine
 
             yield self.x[:i], self.rec[:i], self.inf[:i], self.sus[:i], self.vac[:i]
-
-        end_callback()
