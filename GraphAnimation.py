@@ -1,4 +1,5 @@
 import copy
+import tkinter as tk
 from tkinter import ttk
 
 import matplotlib
@@ -41,7 +42,10 @@ class GraphAnimation:
         self.ax.grid(visible=True, alpha=0.2)
 
         plot_widget = FigureCanvasTkAgg(self.fig, master=self.root)
-        plot_widget.get_tk_widget().grid(column=10, row=20)
+        plot_widget.get_tk_widget().grid(column=10, row=20, sticky=tk.NSEW)
+
+        self.root.columnconfigure(10, weight=1)
+        self.root.rowconfigure(20, weight=1)
 
         return plot_widget
 

@@ -15,8 +15,12 @@ class App:
         self.model = ModelCalculator()
         self.historical_data = HistoricDataSupplier('data/Polish_parsed.csv')
 
+        self.root.columnconfigure(0, weight=0)
+        self.root.columnconfigure(1, weight=1)
+        self.root.rowconfigure(0, weight=1)
+
         graph_frame = ttk.Frame(tk_root)
-        graph_frame.grid(column=1, row=0)
+        graph_frame.grid(column=1, row=0, sticky=tk.NSEW)
         self.graph = GraphAnimation(graph_frame, self.model, self.historical_data)
 
         options_frame = ttk.Frame(tk_root)
