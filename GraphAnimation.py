@@ -96,18 +96,22 @@ class GraphAnimation:
 
         self.animator = ani.FuncAnimation(self.fig, self._build_chart,
                                           frames=self._get_frames(),
-                                          init_func=lambda: None, interval=10, repeat=False)
+                                          init_func=lambda: None, interval=1, repeat=False)
 
     def _build_chart(self, frame_data):
         sim_data = frame_data[0]
         hist_data = frame_data[1]
         x = sim_data[0]
-        self.ax.stackplot(x, sim_data[4], sim_data[1], sim_data[2], sim_data[3],
+        stackplot = self.ax.stackplot(x, sim_data[4], sim_data[1], sim_data[2], sim_data[3],
                           labels=('Vaccinated', 'Recovered', 'Infected', 'Susceptible'),
                           colors=('seagreen', 'steelblue', 'indianred', 'gray'))
         hist_cases_on_stackplot = hist_data[0] + sim_data[4] + sim_data[1]
-        self.ax.plot(x, hist_cases_on_stackplot, color='red')
-        self.ax.plot(x, hist_data[1], color='green')
+        hist_cases_plot, = self.ax.plot(x, hist_cases_on_stackplot, color='red', label='Infected')
+        hist_vaccines_plot, = self.ax.plot(x, hist_data[1], color='green', label='Vaccinated')
+
+        stackplot_legend = self.ax.legend(handles=stackplot, loc='upper left', title='Simulation')
+        self.ax.add_artist(stackplot_legend)
+        self.ax.legend(handles=[hist_cases_plot, hist_vaccines_plot], loc='upper right', title='Historical data')
 
     def _get_frames(self):
         for frame in zip(self.current_model.generate(self._stop_button_callback),
