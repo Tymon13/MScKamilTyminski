@@ -69,7 +69,7 @@ class VaccinationOptions(ttk.Frame):
             "write", lambda *_: setattr(self.model, "vaccination_daily_percentage", self.vaccination_daily.get()))
         self.vaccination_loss_on.trace_add("write", self._switch_vaccination_loss_options)
         self.vaccination_loss_delay.trace_add(
-            "write", lambda *_: setattr(self.model, "vaccination_loss_delay", self.vaccination_daily.get()))
+            "write", lambda *_: setattr(self.model, "vaccination_loss_delay", self.vaccination_loss_delay.get()))
 
     def _switch_sub_options(self, *_):
         if self.vaccination_on.get():
