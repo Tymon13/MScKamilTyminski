@@ -6,6 +6,7 @@ import numpy as np
 class ModelCalculator:
     def __init__(self):
         self.frames = 1000
+        self.initial_infected = 1
         self.population = 38_000_000
         self.R0 = 1.1
         self.recovery = 0.7
@@ -32,7 +33,7 @@ class ModelCalculator:
         self.vac = np.zeros(self.frames + 1)
 
     def generate(self):
-        self.inf[0] = 1  # start the infection
+        self.inf[0] = self.initial_infected  # start the infection
         self.sus[0] = self.population - self.inf[0]
         for i in range(1, self.frames):
             # TODO: this assumes that (frames > recovery_time) and that all arrays are zeroes at the beginning
