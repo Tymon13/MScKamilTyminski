@@ -2,15 +2,32 @@ import csv
 
 import numpy as np
 
+_ROLLING_AVERAGE_WINDOW_SIZE = 30
+
 
 class HistoricDataSupplier:
     def __init__(self, filename):
         self.data = []
+        self.rolling_average_cache = None
 
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
             for line in reader:
                 self.data.append(line)
+
+    @property
+    def minima(self):
+        if not self.rolling_average_cache:
+            y = [data_point['new_cases'] for data_point in self.data]
+            self.rolling_average_cache = np.convolve(y, np.ones(_ROLLING_AVERAGE_WINDOW_SIZE), mode='same')
+        return (np.diff(np.sign(np.diff(self.rolling_average_cache))) > 0).nonzero()[0] + 1
+
+    @property
+    def maxima(self):
+        if not self.rolling_average_cache:
+            y = [data_point['new_cases'] for data_point in self.data]
+            self.rolling_average_cache = np.convolve(y, np.ones(_ROLLING_AVERAGE_WINDOW_SIZE), mode='same')
+        return (np.diff(np.sign(np.diff(self.rolling_average_cache))) < 0).nonzero()[0] + 1
 
     def generate(self):
         cases = np.zeros(len(self.data))
