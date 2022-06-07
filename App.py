@@ -1,9 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from DataOrganizer import DataOrganizer
 from GraphAnimation import GraphAnimation
-from HistoricDataSupplier import HistoricDataSupplier
-from ModelCalculator import ModelCalculator
 from OptionsFrame import OptionsFrame
 
 
@@ -12,8 +11,7 @@ class App:
         self.root = tk_root
         self.set_dark_theme()
         self.set_graceful_exit_on_window_close()
-        self.model = ModelCalculator()
-        self.historical_data = HistoricDataSupplier('data/Polish_parsed.csv')
+        self.data_organizer = DataOrganizer()
 
         self.root.columnconfigure(0, weight=0)
         self.root.columnconfigure(1, weight=1)
@@ -21,11 +19,11 @@ class App:
 
         graph_frame = ttk.Frame(tk_root)
         graph_frame.grid(column=1, row=0, sticky=tk.NSEW)
-        self.graph = GraphAnimation(graph_frame, self.model, self.historical_data)
+        self.graph = GraphAnimation(graph_frame, self.data_organizer)
 
         options_frame = ttk.Frame(tk_root)
         options_frame.grid(column=0, row=0)
-        self.options = OptionsFrame(options_frame, self.model)
+        self.options = OptionsFrame(options_frame, self.data_organizer.settings)
 
     def set_graceful_exit_on_window_close(self):
         self.root.protocol('WM_DELETE_WINDOW', lambda: self.root.quit())

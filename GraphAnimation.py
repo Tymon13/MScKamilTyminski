@@ -1,4 +1,3 @@
-import copy
 import tkinter as tk
 from tkinter import ttk
 
@@ -8,18 +7,15 @@ import matplotlib.pyplot as plt
 from PIL import ImageTk, Image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from HistoricDataSupplier import HistoricDataSupplier
-from ModelCalculator import ModelCalculator
+from DataOrganizer import DataOrganizer
 
 
 class GraphAnimation:
     BUTTON_SIZE_PX = 25
 
-    def __init__(self, tk_root: ttk.Frame, next_model: ModelCalculator, historic_data_supplier: HistoricDataSupplier):
+    def __init__(self, tk_root: ttk.Frame, data_organizer: DataOrganizer):
         self.root = tk_root
-        self.future_model = next_model
-        self.current_model = copy.deepcopy(next_model)
-        self.historic_data_supplier = historic_data_supplier
+        self.data_organizer = data_organizer
 
         self.playback_buttons = self._make_playback_buttons()
         self.playback_buttons.grid(column=10, row=10)
@@ -87,8 +83,6 @@ class GraphAnimation:
         self.stop()
 
     def start(self):
-        self.current_model = copy.deepcopy(self.future_model)
-        self.current_model.reset()
         self.is_playing = True
 
         self.plot_widget.get_tk_widget().destroy()
@@ -114,8 +108,7 @@ class GraphAnimation:
         # self.ax.legend(handles=[hist_cases_plot, hist_vaccines_plot], loc='upper right', title='Historical data')
 
     def _get_frames(self):
-        for frame in zip(self.current_model.generate(),
-                         self.historic_data_supplier.generate()):
+        for frame in self.data_organizer.generate():
             yield frame
         self._stop_button_callback()
 
