@@ -16,18 +16,20 @@ class HistoricDataSupplier:
                 self.data.append(line)
 
     @property
-    def minima(self):
-        if not self.rolling_average_cache:
-            y = [data_point['new_cases'] for data_point in self.data]
-            self.rolling_average_cache = np.convolve(y, np.ones(_ROLLING_AVERAGE_WINDOW_SIZE), mode='same')
-        return (np.diff(np.sign(np.diff(self.rolling_average_cache))) > 0).nonzero()[0] + 1
+    def minima(self) -> list[int]:
+        if self.rolling_average_cache is None:
+            *_, (cases, vaccinated) = self.generate()
+            self.rolling_average_cache = np.convolve(cases, np.ones(_ROLLING_AVERAGE_WINDOW_SIZE), mode='same')
+        minima = (np.diff(np.sign(np.diff(self.rolling_average_cache))) > 0).nonzero()[0] + 1
+        return [0, *minima, len(self.rolling_average_cache)]
 
     @property
-    def maxima(self):
-        if not self.rolling_average_cache:
-            y = [data_point['new_cases'] for data_point in self.data]
+    def maxima(self) -> list[int]:
+        if self.rolling_average_cache is None:
+            y = [int(data_point['new_cases']) if data_point['new_cases'] else 0 for data_point in self.data]
             self.rolling_average_cache = np.convolve(y, np.ones(_ROLLING_AVERAGE_WINDOW_SIZE), mode='same')
-        return (np.diff(np.sign(np.diff(self.rolling_average_cache))) < 0).nonzero()[0] + 1
+        maxima = (np.diff(np.sign(np.diff(self.rolling_average_cache))) < 0).nonzero()[0] + 1
+        return [*maxima]
 
     def generate(self):
         cases = np.zeros(len(self.data))
