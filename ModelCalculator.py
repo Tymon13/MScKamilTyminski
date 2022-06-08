@@ -1,11 +1,10 @@
-from typing import Callable
-
 import numpy as np
 
 
 class ModelCalculator:
     def __init__(self):
         self.frames = 1000
+        self.start_from = 0
         self.initial_infected = 1
         self.population = 38_000_000
         self.R0 = 1.1
@@ -26,7 +25,7 @@ class ModelCalculator:
         self.reset()
 
     def reset(self):
-        self.x = np.arange(0, self.frames + 1)
+        self.x = np.arange(self.start_from, self.start_from + self.frames + 1)
         self.sus = np.zeros(self.frames + 1)
         self.inf = np.zeros(self.frames + 1)
         self.rec = np.zeros(self.frames + 1)
@@ -42,7 +41,7 @@ class ModelCalculator:
             new_recovered = self.inf[i - 1] * self.recovery
             new_recovered = max(new_recovered, 0)
             new_vaccinated = self.sus[i - 1] * self.vaccination_daily_percentage
-            new_vaccinated = max(new_vaccinated, 0) if i > self.vaccination_delay else 0
+            new_vaccinated = max(new_vaccinated, 0) if i > self.vaccination_delay - self.start_from else 0
             lost_immunity = self.rec[i - 1] * self.immunity_failure
             lost_vaccine = self.vac[i - self.vaccination_loss_delay] - self.vac[i - self.vaccination_loss_delay - 1]
             lost_vaccine = max(lost_vaccine, 0) if self.vaccination_loss_delay > 0 else 0
